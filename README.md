@@ -1,2 +1,2 @@
 # fastapi
-api test
+test fastapi function
