@@ -32,7 +32,7 @@ async def get_otp(LoginForm : LoginForm):
                     await functions.send_whatsapp(LoginForm, otp)
                 return {'status': '200', 'data': None, 'message': 'Your otp code has been sent,please check your sms or email!'}
         else:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'status': '404','message': 'Phone number or Email Not Found! !'})
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'status': '404','message': 'Phone number or Email Not Found!'})
     except Exception as e:
         #telegram chat bot here!
         raise e
