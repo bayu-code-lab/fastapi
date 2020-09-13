@@ -35,7 +35,7 @@ async def get_otp(LoginForm : LoginForm):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'status': '404','message': 'Phone number or Email Not Found! !'})
     except Exception as e:
         #telegram chat bot here!
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={'status': '500','message': str(e)})
+        raise e
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
