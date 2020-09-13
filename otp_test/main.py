@@ -30,6 +30,8 @@ async def get_otp(LoginForm : LoginForm):
                     await functions.send_email(LoginForm, result['data']['full_name'],result['data']['email'], otp)
                 elif LoginForm.notification_type == 'whatsapp':
                     await functions.send_whatsapp(LoginForm, otp)
+                else:
+                    raise HTTPException(status.HTTP_404_NOT_FOUND, detail={'status': '404','message': 'notification_type invalid!'})
                 return {'status': '200', 'data': None, 'message': 'Your otp code has been sent,please check your sms or email!'}
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail={'status': '404','message': 'Phone number or Email Not Found!'})

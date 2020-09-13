@@ -18,3 +18,8 @@ def test_sms_get_otp_invalid_format_phone_number():
     response = client.post("/get_otp", json={'phone_number_or_email': '6281297126699', 'notification_type': 'sms'})
     assert response.status_code == 404
     assert response.json() == {"detail":{"status":"404","message":"Phone number or Email Not Found!"}}
+
+def test_sms_get_otp_invalid_notification_type():
+    response = client.post("/get_otp", json={'phone_number_or_email': '6281297126699', 'notification_type': 'xxx'})
+    assert response.status_code == 404
+    assert response.json() == {"detail":{"status":"404","message":"notification_type invalid!"}}
