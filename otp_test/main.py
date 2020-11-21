@@ -1,12 +1,16 @@
+import os
+os.environ["AUTHJWT_SECRET_KEY"] = "81D80X-PR0DUCT10N@B8990852-931A-4824-BEA9-9A28564647FC"
+os.environ["AUTHJWT_ALGORITHM"] = "HS512"
 from typing import Optional
 
 import boto3
 import uvicorn
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Depends
 from pydantic import BaseModel
 
 import functions
 
+from fastapi_jwt_auth import AuthJWT
 app = FastAPI()
 
 class LoginForm(BaseModel):
@@ -38,6 +42,16 @@ async def get_otp(LoginForm : LoginForm):
     except Exception as e:
         #telegram chat bot here!
         raise e
+
+
+#jwt test
+@app.get('/get_jwt')
+def get_jwt(Authorize: AuthJWT = Depends()):
+    Authorize.jwt_required()
+
+    # Access the identity of the current user with get_jwt_identity
+    current_user = Authorize.get_jwt_identity()
+    return {"logged_in_as": current_user}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
